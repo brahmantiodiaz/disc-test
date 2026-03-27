@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
           services.alert.toastWarning("Semua field wajib diisi.");
           return;
         }
-        var draft = {
+        let draft = {
           id: "PRT-" + Date.now(),
           name: name,
           gender: gender,
