@@ -1,0 +1,135 @@
+:root {
+  --bg: #f6f8fc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #4f46e5;
+  --primary-soft: #eef2ff;
+  --border: #e2e8f0;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+#navbar {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+#footer {
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+}
+a {
+  text-decoration: none;
+}
+.app-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+.hero-card {
+  padding: 2rem;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(79, 70, 229, 0.15),
+      transparent 28%
+    ),
+    linear-gradient(135deg, #ffffff, #f8faff);
+}
+.role-card,
+.result-card,
+.admin-card {
+  padding: 1.25rem;
+}
+.section-gap {
+  margin-top: 2rem;
+}
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+.page-title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.text-muted-custom {
+  color: var(--muted);
+}
+.kpi-box {
+  background: #fff;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+.chart-wrap {
+  position: relative;
+  min-height: 260px;
+}
+.footer-wrap {
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+}
+#footer .footer {
+  color: #64748b;
+  padding: 16px 0 24px;
+}
+
+.colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}

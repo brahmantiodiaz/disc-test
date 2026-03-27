@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/responsive.css" />
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <main class="py-4 py-md-5">
+      <div class="container">
+        <div id="page-content">
+<div class="row g-4">
+      <div class="col-12"><div class="app-card p-4"><div class="d-flex flex-wrap justify-content-between gap-3"><div><h1 class="h3 mb-2">wadwad</h1><div class="text-muted-custom">Gender: Laki-laki • Umur: 23 • Tanggal Test: 28/3/2026, 00.19.10</div></div></div></div></div>
+      <div class="col-12">
+    <div class="app-card p-3 p-md-4">
+      <h3 class="h5 mb-3">Ringkasan Score</h3>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center align-middle mb-0">
+          <thead><tr><th>Line</th><th>D</th><th>I</th><th>S</th><th>C</th><th>*</th><th>tot</th></tr></thead>
+          <tbody>
+            <tr><th>1</th><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>3</td></tr>
+            <tr><th>2</th><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>3</td></tr>
+            <tr><th>3</th><td>0</td><td>0</td><td>-3</td><td>2</td><td>-</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+      <div class="col-lg-4"><div class="app-card p-3 p-md-4 h-100"><h3 class="h6 mb-3">Graph 1 • Most / Public Self</h3></div></div>
+      <div class="col-lg-4"><div class="app-card p-3 p-md-4 h-100"><h3 class="h6 mb-3">Graph 2 • Least / Core Self</h3></div></div>
+      <div class="col-lg-4"><div class="app-card p-3 p-md-4 h-100"><h3 class="h6 mb-3">Graph 3 • Change / Mirror Self</h3></div></div>
+      <div class="col-12">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="app-card result-card">
+          <h3 class="h5">Profile</h3>
+          <div class="badge text-bg-light mb-3">CD</div>
+          <h4 class="h6 fw-bold">ANALYST</h4>
+          <p class="mb-0 text-muted-custom">Analitis, tajam, objektif, dan fokus pada kualitas.</p>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="app-card result-card">
+          <h3 class="h5">Kenapa hasilnya ini</h3>
+          <p class="mb-0 text-muted-custom">Profile kamu adalah ANALYST karena skor tertinggi ada pada C (2) dan didukung oleh D (0), yaitu perpaduan antara ketelitian, akurasi, dan kecenderungan bekerja secara sistematis dengan ketegasan, dorongan mengambil kendali, dan orientasi hasil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="footer"></div>
+
+    <script src="./js/core/init.js"></script>
+    <script src="./js/core/permission.js"></script>
+    <script src="./js/components/navbar.js"></script>
+    <script src="./js/components/footer.js"></script>
+    <script src="./js/components/questionCard.js"></script>
+    <script src="./js/data/profile.js"></script>
+    <script src="./js/data/question.js"></script>
+    <script src="./js/helper/dummyParticipant.js"></script>
+    <script src="./js/pages/resultPage.js"></script>
+    <script src="./js/services/alertServices.js"></script>
+    <script src="./js/services/scoringService.js"></script>
+    <script src="./js/services/participantServices.js"></script>
+    <script src="./js/services/scoringService.js"></script>
+    <script src="./js/services/resultProfileService.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
