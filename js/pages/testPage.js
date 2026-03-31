@@ -78,14 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 function startTest() {
   let root = document.getElementById("page-content");
-  let participant = localStorage.getItem("disc_current_participant");
-  participant = JSON.parse(participant);
-  let currentIndex = localStorage.getItem("disc_current_question_index");
-  if (!currentIndex) {
-    currentIndex = 0;
-  }
-  currentIndex = Number(currentIndex);
+  let participant = services.storage.get("disc_current_participant", null);
   let questions = data.questions || [];
+
   if (!questions.length) {
     root.innerHTML = `
       <div class="app-card p-4">
@@ -97,15 +92,22 @@ function startTest() {
     `;
     return;
   }
-  if (currentIndex < 0) currentIndex = 0;
-  if (currentIndex >= questions.length) currentIndex = questions.length - 1;
-  let question = questions[currentIndex];
-  let currentAnswer = participant.answers[currentIndex] || null;
-  let progressPercent = Math.round(
-    ((currentIndex + 1) / questions.length) * 100,
-  );
+
   renderPage();
+
   function renderPage() {
+    participant = services.storage.get("disc_current_participant", null);
+
+    let currentIndex = services.storage.get("disc_current_question_index", 0);
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex >= questions.length) currentIndex = questions.length - 1;
+
+    let question = questions[currentIndex];
+    let currentAnswer = participant.answers[currentIndex] || null;
+    let progressPercent = Math.round(
+      ((currentIndex + 1) / questions.length) * 100,
+    );
+
     root.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-xl-9">
@@ -160,5 +162,143 @@ function startTest() {
         </div>
       </div>
     `;
+
+    bindEvents(currentIndex, question);
+  }
+
+  function bindEvents(currentIndex, question) {
+    let prevBtn = document.getElementById("prev-btn");
+    let nextBtn = document.getElementById("next-btn");
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        saveCurrentSelectionSilently(currentIndex, question);
+        if (currentIndex > 0) {
+          services.storage.set("disc_current_question_index", currentIndex - 1);
+          renderPage();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        let mostInput = document.querySelector(
+          'input[name="mostChoice"]:checked',
+        );
+        let leastInput = document.querySelector(
+          'input[name="leastChoice"]:checked',
+        );
+
+        if (!mostInput || !leastInput) {
+          services.alert.toastWarning("Pilih P dan K terlebih dahulu.");
+          return;
+        }
+
+        if (mostInput.value === leastInput.value) {
+          services.alert.toastWarning("Pilihan P dan K tidak boleh sama.");
+          return;
+        }
+
+        participant.answers[currentIndex] = {
+          questionId: question.id,
+          mostChoice: Number(mostInput.value),
+          leastChoice: Number(leastInput.value),
+        };
+
+        services.storage.set("disc_current_participant", participant);
+
+        if (currentIndex === questions.length - 1) {
+          finishTest();
+          return;
+        }
+
+        services.storage.set("disc_current_question_index", currentIndex + 1);
+        renderPage();
+      });
+    }
+
+    bindRadioUX();
+  }
+  function bindRadioUX() {
+    let mostInputs = document.querySelectorAll('input[name="mostChoice"]');
+    let leastInputs = document.querySelectorAll('input[name="leastChoice"]');
+
+    for (let i = 0; i < mostInputs.length; i++) {
+      mostInputs[i].addEventListener("change", function () {
+        let selectedMost = this.value;
+        let checkedLeast = document.querySelector(
+          'input[name="leastChoice"]:checked',
+        );
+
+        if (checkedLeast && checkedLeast.value === selectedMost) {
+          checkedLeast.checked = false;
+          services.alert.toastWarning(
+            "Pilihan K dibersihkan karena tidak boleh sama dengan P.",
+          );
+        }
+      });
+    }
+
+    for (let j = 0; j < leastInputs.length; j++) {
+      leastInputs[j].addEventListener("change", function () {
+        let selectedLeast = this.value;
+        let checkedMost = document.querySelector(
+          'input[name="mostChoice"]:checked',
+        );
+
+        if (checkedMost && checkedMost.value === selectedLeast) {
+          checkedMost.checked = false;
+          services.alert.toastWarning(
+            "Pilihan P dibersihkan karena tidak boleh sama dengan K.",
+          );
+        }
+      });
+    }
+  }
+
+  function saveCurrentSelectionSilently(currentIndex, question) {
+    let mostInput = document.querySelector('input[name="mostChoice"]:checked');
+    let leastInput = document.querySelector(
+      'input[name="leastChoice"]:checked',
+    );
+
+    if (!mostInput || !leastInput) return;
+    if (mostInput.value === leastInput.value) return;
+
+    participant.answers[currentIndex] = {
+      questionId: question.id,
+      mostChoice: Number(mostInput.value),
+      leastChoice: Number(leastInput.value),
+    };
+
+    services.storage.set("disc_current_participant", participant);
+  }
+
+  function finishTest() {
+    let result = services.scoring.calculate(participant.answers);
+    let profile = services.resultProfile.resolve(result.line3);
+    let reason = services.resultProfile.buildReason(result.line3, profile);
+
+    let finalParticipant = {
+      id: participant.id,
+      name: participant.name,
+      gender: participant.gender,
+      age: participant.age,
+      createdAt: participant.createdAt,
+      answers: participant.answers,
+      result: result,
+      profile: profile,
+      reason: reason,
+    };
+
+    services.participant.add(finalParticipant);
+    services.storage.remove("disc_current_question_index");
+    services.storage.remove("disc_current_participant");
+    console.log("harusnya keluar alert");
+    services.alert
+      .success("Test selesai. Hasil akan ditampilkan sekarang.")
+      .then(function () {
+        window.location.href = "result.html?id=" + finalParticipant.id;
+      });
   }
 }
