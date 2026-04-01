@@ -38,8 +38,14 @@ document.addEventListener("DOMContentLoaded", function () {
         password: userDetail.password,
         gender: gender,
         age: age,
+        isAdmin: userDetail.isAdmin,
       });
-
+      services.storage.set("userLogin", {
+        userName: userDetail.userName,
+        fullName: userDetail.fullName,
+        isAdmin: userDetail.isAdmin,
+      });
+      console.log(services.storage.get("userLogin", null));
       services.alert.success("Profile berhasil diupdate!");
     });
 });

@@ -1,7 +1,7 @@
 components.navbar = function () {
   let user = services.storage.get("userLogin", {});
   let userSection = "";
-
+  console.log(user.fullName);
   if (user.fullName) {
     userSection = `
       <ul class="navbar-nav ms-auto align-items-center">
