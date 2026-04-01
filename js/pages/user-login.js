@@ -15,6 +15,9 @@ if (permissions.preventAdminLoginPageIfLoggedIn()) {
           return;
         }
         let findUser = services.user.getByUserName(username);
+        if (!findUser) {
+          return;
+        }
         if (
           username === findUser.userName &&
           services.user.encryptDecrypt(password, true) === findUser.password
