@@ -38,7 +38,7 @@ function onLogout() {
       localStorage.removeItem("adminUsername");
 
       services.alert.success("Logout berhasil.").then(function () {
-        window.location.href = "/index.html";
+        window.location.href = "index.html";
       });
     }
   });
