@@ -28,6 +28,12 @@ let permissions = {
     return true;
   },
 
+  isAdmin: function () {
+    let userName = localStorage.getItem("adminUsername");
+
+    return userName ? true : false;
+  },
+
   preventAdminLoginPageIfLoggedIn: function () {
     let userName = localStorage.getItem("adminUsername");
     if (userName) {

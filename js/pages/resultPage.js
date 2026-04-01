@@ -41,10 +41,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let testDate = new Date(profileID.createdAt).toLocaleString();
 
+  document.getElementById("profile-highlight").innerHTML =
+    `<div style="display: flex; justify-content: flex-end">
+                    <a href="admin-dashboard.html"
+                      ><button
+                        id="back-admin-button"
+                        type="button"
+                        class="btn btn-secondary btn-lg d-none"
+                      >
+                        Back
+                      </button></a
+                    >
+                  </div>
+                  <div style=" display: grid;
+                    justify-content: center;
+                    align-items: center;
+                    margin-bottom: 20px;
+                  "
+                >
+                  <h3 class="h2">Profile</h3>
+                  <span class="h2 text-center text-muted-custom"
+                    >${profileID.profile.key}</span
+                  >
+                </div>
+                <div class="d-flex flex-wrap justify-content-between gap-3">
+                  <div id="headerProfile">
+                    <h1 class="h3 mb-2">${profileID.name}</h1>
+               <div class="text-muted-custom">
+                  Gender: ${profileID.gender} • Umur: ${profileID.age} • Tanggal Test: ${testDate}
+                   </div>
+                    </div>
+                  </div>
+                  
+                </div>`;
+
+  // <div style="height: 40px; width: 70px">
+  //   <a href="admin-dashboard.html">
+  //     <button
+  //       id="back-admin-button"
+  //       type="button"
+  //       class="btn btn-secondary btn-lg d-none"
+  //     >
+  //       Back
+  //     </button>
+  //   </a>
+  // </div>;
+
   document.getElementById("headerProfile").innerHTML =
     `<h1 class="h3 mb-2">${profileID.name}</h1>
                     <div class="text-muted-custom">
-                      Gender: ${profileID.gender} • Umur: ${profileID.age} • Tanggal Test: ${testDate}`;
+                      Gender: ${profileID.gender} • Umur: ${profileID.age} • Tanggal Test: ${testDate}
+                      </div>`;
+
+  // Back button for admin
+  let adminButton = document.getElementById("back-admin-button");
+
+  if (permissions.isAdmin()) {
+    adminButton.classList.remove("d-none");
+  }
 
   let resultTableStr = "";
   let countLine = 1;
@@ -73,8 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     <p class="mb-0 text-muted-custom">
                       ${profileID.profile.summary}
                     </p>`;
-
-  console.log(document.getElementById("reason-card"));
 
   document.getElementById("reason-card").innerHTML =
     `<h3 class="h5">Kenapa hasilnya ini</h3>
