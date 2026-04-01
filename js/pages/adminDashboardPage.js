@@ -41,7 +41,7 @@ function checkParticipant(){
   
 }
 
-document.addEventListener("click", deleteButton(id));
+// document.addEventListener("click", deleteButton(id));
 
 function bindTable(data) {
   let result = "";
@@ -55,18 +55,18 @@ function bindTable(data) {
     const newDate = dateObj;
 
     // Format: M/D/YYYY (numeric month, day, and 4-digit year)
-    const dateFormatOptions = {
-      year: "numeric",
-      month: "numeric",
-      day: "string",
-      hour: 2 - digit,
-      minute: 2 - digit,
-    };
+    // const dateFormatOptions = {
+    //   year: "numeric",
+    //   month: "numeric",
+    //   day: "string",
+    //   hour: 2 - digit,
+    //   minute: 2 - digit,
+    // };
 
-    const newFormattedDate = new Intl.DateTimeFormat(
-      "en-US",
-      dateFormatOptions,
-    ).format(eventDate);
+    // const newFormattedDate = new Intl.DateTimeFormat(
+    //   "en-US",
+    //   dateFormatOptions,
+    // ).format(eventDate);
 
     result += `<tr>
                     <td>${i + 1}</td>
@@ -74,7 +74,7 @@ function bindTable(data) {
                     <td>${participant.gender}</td>
                     <td>${participant.age}</td>
                     <td>${participant.profile.title}</td>
-                    <td>${newFormattedDate}</td>
+                    
                     <td class="text-nowrap">
                       <a
                         href="result.html?id=${participant.id}"
