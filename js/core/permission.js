@@ -28,7 +28,7 @@ let permissions = {
       services.alert.warning("Login admin terlebih dahulu.");
 
       setTimeout(function () {
-        window.location.href = "admin-login.html";
+        window.location.href = "user-login.html";
       }, 900);
 
       return false;
