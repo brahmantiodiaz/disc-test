@@ -3,28 +3,35 @@ if (permissions.preventAdminLoginPageIfLoggedIn()) {
     components.navbar();
     components.footer();
     document
-      .getElementById("admin-login-form")
+      .getElementById("user-login-form")
       .addEventListener("submit", function (event) {
         event.preventDefault();
 
         let username = document.getElementById("username").value.trim();
         let password = document.getElementById("password").value.trim();
-        console.log(username);
 
         if (!username || !password) {
           services.alert.toastWarning("Username dan password wajib diisi.");
           return;
         }
-
-        if (username === auth.username && password === auth.password) {
-          // localStorage.setItem("adminUsername", username);
+        let findUser = services.user.getByUserName(username);
+        if (
+          username === findUser.userName &&
+          services.user.encryptDecrypt(password, true) === findUser.password
+        ) {
           services.storage.set("userLogin", {
-            userName: auth.username,
-            fullName: auth.fullName,
-            isAdmin: true,
+            userName: findUser.userName,
+            fullName: findUser.fullName,
+            isAdmin: findUser.isAdmin,
           });
-          services.alert.success("Login admin berhasil.").then(function () {
-            window.location.href = "admin-dashboard.html";
+          if (findUser.isAdmin) {
+            services.alert.success("Login admin berhasil.").then(function () {
+              window.location.href = "admin-dashboard.html";
+            });
+            return;
+          }
+          services.alert.success("Login berhasil.").then(function () {
+            window.location.href = "index.html";
           });
 
           return;

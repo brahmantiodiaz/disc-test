@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  components.navbar();
-  components.footer();
-  if (permissions.requireCurrentParticipant()) {
-    startTest();
-  } else {
-    document.getElementById("page-content").innerHTML = `
+  if (permissions.requireUser()) {
+    components.navbar();
+    components.footer();
+    if (permissions.requireCurrentParticipant()) {
+      startTest();
+    } else {
+      document.getElementById("page-content").innerHTML = `
               <div class="row justify-content-center">
             <div class="col-lg-8">
               <div class="app-card p-4 p-md-5">
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       id="name"
                       class="form-control"
                       placeholder="Masukkan nama lengkap"
+                      disabled
                     />
                   </div>
                   <div class="mb-3">
@@ -51,31 +53,52 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
           </div>
   `;
-    document
-      .getElementById("participant-form")
-      .addEventListener("submit", function (event) {
-        event.preventDefault();
-        let name = document.getElementById("name").value.trim();
-        let gender = document.getElementById("gender").value;
-        let age = document.getElementById("age").value.trim();
-        if (!name || !gender || !age) {
-          services.alert.toastWarning("Semua field wajib diisi.");
-          return;
-        }
-        let draft = {
-          id: "PRT-" + Date.now(),
-          name: name,
-          gender: gender,
-          age: Number(age),
-          createdAt: new Date().toISOString(),
-          answers: [],
-        };
-        localStorage.setItem("disc_current_participant", JSON.stringify(draft));
-        localStorage.setItem("disc_current_question_index", 0);
+      let user = services.user.getByUserName(userData().userName);
+      document.getElementById("name").value = user.fullName;
+      if (user.gender && user.age) {
+        setDraft(user);
         startTest();
-      });
+      }
+      document
+        .getElementById("participant-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          let name = document.getElementById("name").value.trim();
+          let gender = document.getElementById("gender").value;
+          let age = document.getElementById("age").value.trim();
+          user.gender = gender;
+          user.age = age;
+          if (user.gender && user.age) {
+            services.user.update({
+              userName: user.userName,
+              fullName: user.fullName,
+              password: user.password,
+              gender: user.gender,
+              age: user.age,
+            });
+          }
+          if (!name || !gender || !age) {
+            services.alert.toastWarning("Semua field wajib diisi.");
+            return;
+          }
+          setDraft(user);
+          startTest();
+        });
+    }
   }
 });
+function setDraft(user) {
+  let draft = {
+    id: "PRT-" + Date.now(),
+    name: user.fullName,
+    gender: user.gender,
+    age: user.age,
+    createdAt: new Date().toISOString(),
+    answers: [],
+  };
+  localStorage.setItem("disc_current_participant", JSON.stringify(draft));
+  localStorage.setItem("disc_current_question_index", 0);
+}
 function startTest() {
   let root = document.getElementById("page-content");
   let participant = services.storage.get("disc_current_participant", null);
@@ -119,11 +142,6 @@ function startTest() {
               </div>
             </div>
 
-            <div class="d-flex flex-wrap gap-2">
-              <a class="btn btn-outline-secondary btn-sm">
-                Edit Data
-              </a>
-            </div>
           </div>
 
           <div class="app-card p-3 p-md-4 mb-4">
@@ -134,7 +152,7 @@ function startTest() {
 
             <div class="progress" style="height: 10px;">
               <div
-                class="progress-bar"
+                class="progress-bar bg-primary"
                 role="progressbar"
                 style="width: ${progressPercent}%"
                 aria-valuenow="${progressPercent}"
@@ -289,6 +307,7 @@ function startTest() {
       result: result,
       profile: profile,
       reason: reason,
+      userName: userData().userName,
     };
 
     services.participant.add(finalParticipant);

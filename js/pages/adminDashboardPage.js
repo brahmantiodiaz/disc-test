@@ -1,4 +1,5 @@
 // saveDummyParticipants();
+permissions.requireAdmin();
 components.navbar();
 components.footer();
 
@@ -113,4 +114,4 @@ function getParticipantId(id) {
 renderTotalDataTabelParticipant();
 renderDataTabel();
 renderButtonDelete();
-saveDummyParticipants();
+// saveDummyParticipants();

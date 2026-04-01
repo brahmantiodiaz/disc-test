@@ -19,7 +19,9 @@ services.participant = {
   },
 
   add: function (participant) {
-    let list = this.getAll();
+    let list = this.getAll().filter(function (item) {
+      return item.userName !== participant.userName;
+    });
     list.unshift(participant);
     this.saveAll(list);
   },
@@ -28,6 +30,15 @@ services.participant = {
     let list = this.getAll();
     for (let i = 0; i < list.length; i++) {
       if (list[i].id === id) {
+        return list[i];
+      }
+    }
+    return null;
+  },
+  getByUserName: function (username) {
+    let list = this.getAll();
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].userName === username) {
         return list[i];
       }
     }

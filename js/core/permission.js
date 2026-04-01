@@ -13,9 +13,18 @@ let permissions = {
   },
 
   requireAdmin: function () {
-    let userName = localStorage.getItem("adminUsername");
+    let user = services.storage.get("userLogin", {});
+    console.log(user.isAdmin);
 
-    if (!userName) {
+    if (!user.isAdmin && user.userName) {
+      services.alert.warning("Page ini hanya bisa di akses oleh admin.");
+
+      setTimeout(function () {
+        window.location.href = "index.html";
+      }, 900);
+
+      return false;
+    } else if (!user.userName) {
       services.alert.warning("Login admin terlebih dahulu.");
 
       setTimeout(function () {
@@ -29,16 +38,39 @@ let permissions = {
   },
 
   isAdmin: function () {
-    let userName = localStorage.getItem("adminUsername");
+    let user = services.storage.get("userLogin");
 
-    return userName ? true : false;
+    return user.isAdmin;
   },
 
   preventAdminLoginPageIfLoggedIn: function () {
-    let userName = localStorage.getItem("adminUsername");
-    if (userName) {
+    let user = services.storage.get("userLogin", {});
+    if (user.isAdmin) {
       window.location.href = "admin-dashboard.html";
-      // return false;
+      return false;
+    }
+    if (user && user.isAdmin === false) {
+      window.location.href = "index.html";
+      return false;
+    }
+    return true;
+  },
+  requireUser: function () {
+    let userName = userData();
+    console.log(userName.userName);
+
+    if (!userName.userName || userName.isAdmin) {
+      if (userName.isAdmin) {
+        services.alert.warning("Admin tidak bisa melakukan assessment.");
+      } else {
+        services.alert.warning("User harus login terlebih dahulu.");
+      }
+
+      setTimeout(function () {
+        window.location.href = "user-login.html";
+      }, 1500);
+
+      return false;
     }
 
     return true;

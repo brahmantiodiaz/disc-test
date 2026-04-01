@@ -1,20 +1,64 @@
 :root {
-  --bg: #f6f8fc;
-  --surface: #ffffff;
+  --bg: #fff0ed;
+  --surface: #ffd4d2;
   --text: #0f172a;
   --muted: #64748b;
-  --primary: #4f46e5;
+  --primary: #bdb5d3;
   --primary-soft: #eef2ff;
-  --border: #e2e8f0;
+  --border: #0f172a;
   --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
   --radius-lg: 20px;
   --radius-md: 14px;
 }
+.hero-wrapper {
+  position: relative;
+  overflow: visible;
+}
+
+.hero-bg-image {
+  position: absolute;
+  right: -40px;
+  bottom: -100px;
+  width: 480px;
+  max-width: 48%;
+  pointer-events: none;
+}
+
+.z-1 {
+  position: relative;
+  z-index: 1;
+}
+input[type="checkbox"]:checked {
+  accent-color: var(--primary);
+}
+.bg-primary {
+  background-color: var(--primary) !important;
+}
+.table > :not(caption) > * > * {
+  background-color: var(--surface);
+  border-color: #0f172a;
+}
+.table tbody,
+.table thead {
+  border-color: #0f172a !important;
+}
+
+.btn-primary {
+  background-color: #bdb5d3;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
 #navbar {
   position: sticky;
   top: 0;
-  overflow: hidden;
-  background-color: #333;
+  overflow: visible !important;
+  background-color: #fff0ed;
+  z-index: 9999;
 }
 
 #footer {
@@ -54,8 +98,19 @@ a {
       rgba(79, 70, 229, 0.15),
       transparent 28%
     ),
-    linear-gradient(135deg, #ffffff, #f8faff);
+    linear-gradient(135deg, #ffffff, #fff0ed);
 }
+
+.standar-cart {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(79, 70, 229, 0.15),
+      transparent 28%
+    ),
+    linear-gradient(135deg, #ffffff, #fff0ed);
+}
+
 .role-card,
 .result-card,
 .admin-card {

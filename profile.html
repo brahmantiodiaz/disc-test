@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon standard -->
+    <link rel="icon" href="./asset/favicon.ico" />
+
+    <!-- PNG favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./asset/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./asset/favicon-16x16.png"
+    />
+
+    <!-- Android Chrome -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="./asset/android-chrome-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="./asset/android-chrome-512x512.png"
+    />
+
+    <!-- Apple (iPhone/iPad) -->
+    <link rel="apple-touch-icon" href="./asset/apple-touch-icon.png" />
+    <title>Profile - DISC App</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+
+  <body>
+    <div id="navbar"></div>
+
+    <main class="py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="app-card p-4 p-md-5">
+              <h1 class="h3 mb-4">Profile</h1>
+
+              <form id="profile-form">
+                <div class="mb-3">
+                  <label class="form-label">username</label>
+                  <input id="username" disabled class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Nama</label>
+                  <input id="name" class="form-control" />
+                </div>
+
+                <!-- GENDER -->
+                <div class="mb-3">
+                  <label class="form-label">Gender</label>
+                  <select id="gender" class="form-select">
+                    <option value="">Pilih</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+                </div>
+
+                <!-- AGE -->
+                <div class="mb-3">
+                  <label class="form-label">Umur</label>
+                  <input id="age" type="number" class="form-control" />
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                  <a href="index.html" class="btn btn-outline-secondary">
+                    Kembali
+                  </a>
+
+                  <button type="submit" class="btn btn-primary">Simpan</button>
+                  <div id="buttonTest">
+                    <a href="test.html" class="btn btn-primary"
+                      ><i class="bi bi-play-circle me-2"></i>Mulai Test</a
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="./js/core/init.js" defer></script>
+    <script src="./js/services/localStorageServices.js" defer></script>
+    <script src="./js/services/alertServices.js" defer></script>
+    <script src="./js/services/userServices.js" defer></script>
+    <script src="./js/services/participantServices.js" defer></script>
+    <script src="./js/components/navbar.js" defer></script>
+    <script src="./js/components/footer.js" defer></script>
+    <script src="./js/pages/profilePage.js" defer></script>
+  </body>
+</html>

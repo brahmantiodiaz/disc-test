@@ -53,7 +53,7 @@ components.questionCard = function (question, currentAnswer) {
         </div>
 
         <div class="d-flex gap-2">
-          <span class="badge text-bg-primary">P = Paling sesuai</span>
+          <span class="badge bg-primary">P = Paling sesuai</span>
           <span class="badge text-bg-secondary">K = Kurang sesuai</span>
         </div>
       </div>

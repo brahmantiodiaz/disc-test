@@ -38,20 +38,15 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!profileID.id) {
     window.location.href = "index.html";
   }
+  if (userData.userName !== profileID.userName && !userData.isAdmin) {
+    console.log("usename tidak sama dan bukan admin");
+  }
 
   let testDate = new Date(profileID.createdAt).toLocaleString();
 
   document.getElementById("profile-highlight").innerHTML =
     `<div style="display: flex; justify-content: flex-end">
-                    <a href="admin-dashboard.html"
-                      ><button
-                        id="back-admin-button"
-                        type="button"
-                        class="btn btn-secondary btn-lg d-none"
-                      >
-                        Back
-                      </button></a
-                    >
+                   ${renderButton()}
                   </div>
                   <div style=" display: grid;
                     justify-content: center;
@@ -121,18 +116,35 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("resultTable").innerHTML = resultTableStr;
 
   document.getElementById("profile-card").innerHTML = `
-                    <h3 class="h5">Profile</h3>
-                    <div class="badge text-bg-light mb-3">${profileID.profile.key}</div>
-                    <h4 class="h6 fw-bold">${profileID.profile.title}</h4>
-                    <p class="mb-0 text-muted-custom">
-                      ${profileID.profile.summary}
-                    </p>`;
-
-  document.getElementById("reason-card").innerHTML =
-    `<h3 class="h5">Kenapa hasilnya ini</h3>
-                    <p class="mb-0 text-muted-custom">
+  <h4 class="h6 fw-bold mb-2">${profileID.profile.title}</h4>
+  <p class="text-muted mb-4">
+    ${profileID.profile.summary}
+  </p>
+<h3 class="h5 mb-2">Alasan</h3>
+                    <p class="mb-4">
                       ${profileID.reason}
-                    </p>`;
+                    </p>
+  <div class="mb-3">
+    <h5 class="h6 fw-semibold mb-2">Strengths</h5>
+    <ul class="mb-0 ps-3">
+      ${profileID.profile.strengths
+        .map((item) => `<li class="mb-1">${item}</li>`)
+        .join("")}
+    </ul>
+  </div>
+
+  <div>
+    <h5 class="h6 fw-semibold mb-2">Weaknesses</h5>
+    <ul class="mb-0 ps-3">
+      ${profileID.profile.weaknesses
+        .map((item) => `<li class="mb-1">${item}</li>`)
+        .join("")}
+    </ul>
+  </div>
+`;
+
+  // document.getElementById("reason-card").innerHTML =
+  // ``;
 
   // chart function
   const firstChartJS = document.getElementById("firstChart");
@@ -153,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
           borderWidth: 3,
           pointRadius: 5,
           pointHoverRadius: 8,
+          borderColor: "#bdb5d3",
         },
       ],
     },
@@ -213,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
           borderWidth: 3,
           pointRadius: 5,
           pointHoverRadius: 8,
+          borderColor: "#bdb5d3",
         },
       ],
     },
@@ -273,6 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
           borderWidth: 3,
           pointRadius: 5,
           pointHoverRadius: 8,
+          borderColor: "#bdb5d3",
         },
       ],
     },
@@ -318,3 +333,27 @@ document.addEventListener("DOMContentLoaded", function () {
   //create&Save dummyData to localStorage
   // saveDummyParticipants();
 });
+
+function renderButton() {
+  let user = userData();
+  console.log(user.isAdmin);
+  if (user.isAdmin) {
+    return `<a href="admin-dashboard.html"
+                      ><button
+                        id="back-admin-button"
+                        type="button"
+                        class="btn btn-secondary d-none"
+                      >
+                        Back
+                      </button></a>`;
+  } else {
+    return `<a href="test.html"
+                      ><button
+                        id="back-admin-button"
+                        type="button"
+                        class="btn btn-primary"
+                      >
+                        Retake test
+                      </button></a>`;
+  }
+}
