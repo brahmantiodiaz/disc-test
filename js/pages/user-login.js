@@ -16,6 +16,7 @@ if (permissions.preventAdminLoginPageIfLoggedIn()) {
         }
         let findUser = services.user.getByUserName(username);
         if (!findUser) {
+          services.alert.toastError("username tidak ada");
           return;
         }
         if (
