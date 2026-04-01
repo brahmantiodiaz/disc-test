@@ -20,76 +20,49 @@
     <link rel="stylesheet" href="./styles/responsive.css" />
   </head>
   <body>
+    <!-- start navbar -->
     <div id="navbar"></div>
+    <!-- end navbar -->
+
+    <!-- start main body -->
     <main class="py-4 py-md-5">
       <div class="container">
         <div id="page-content">
           <div
             class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4"
           >
-            <div>
-              <p class="h3 mb-1">*Contoh Jika ada partisipan*</p>
-              <p class="text-muted-custom mb-0" id="totalData">Total data: 1</p>
+            <!-- kondisi ADA data -->
+            <div id="ada-participant">
+              <!-- <p class="h3 mb-1">*Contoh Jika ada partisipan*</p> -->
+              <p class="text-muted-custom mb-0" id="totalData">
+                Total Data: cihuy
+              </p>
             </div>
           </div>
 
-          <div class="app-card p-3 p-md-4" >
+          <div class="app-card p-3 p-md-4">
             <div class="table-responsive" id="participantTable">
-              <table class="table align-middle mb-0">
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Gender</th>
-                    <th>Umur</th>
-                    <th>Profile</th>
-                    <th>Tanggal Test</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Aulia Brahmantio Diaz</td>
-                    <td>Laki-laki</td>
-                    <td>27</td>
-                    <td>PERFECTIONIST</td>
-                    <td>27/3/2026, 20.47.40</td>
-                    <td class="text-nowrap">
-                      <a
-                        href="result.html?id=PRT-1774619260382"
-                        class="btn btn-sm btn-outline-primary"
-                        >View</a
-                      >
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-danger"
-                        data-delete-id="PRT-1774619260382"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <!-- disini tabel dinamis -->
+              <h3 class="h5 mb-2">Belum ada partisipan</h3>
+              <p class="text-muted-custom mb-0">
+                Data peserta yang selesai test akan muncul di sini.
+              </p>
             </div>
           </div>
           <br />
-          <div>
-            <p class="h3 mb-1">*Contoh Jika tida ada partisipan*</p
+          <!-- <div id="kosong-participant">
+            <p class="h3 mb-1">*Contoh Jika tida ada partisipan*</p>
             <p class="text-muted-custom mb-0">Total data: 1</p>
           </div>
-          <div class="app-card p-4 text-center">
-            <h3 class="h5 mb-2">Belum ada partisipan</h3>
-            <p class="text-muted-custom mb-0">
-              Data peserta yang selesai test akan muncul di sini.
-            </p>
-          </div>
+          <div class="app-card p-4 text-center"></div> -->
         </div>
       </div>
     </main>
-    <div id="footer"></div>
+    <!-- end main body -->
 
+    <!-- start footer -->
+    <div id="footer"></div>
+    <!-- end footer -->
     <script src="./js/core/init.js"></script>
     <script src="./js/core/permission.js"></script>
     <script src="./js/components/navbar.js"></script>
@@ -98,7 +71,7 @@
     <script src="./js/data/profile.js"></script>
     <script src="./js/data/question.js"></script>
     <script src="./js/helper/dummyParticipant.js"></script>
-    <script src="./js/pages/adminDashboardPage.js"></script>
+    <script src="./js/pages/adminDashboardPage.js" defer></script>
     <script src="./js/services/alertServices.js"></script>
     <script src="./js/services/scoringService.js"></script>
     <script src="./js/services/participantServices.js"></script>
