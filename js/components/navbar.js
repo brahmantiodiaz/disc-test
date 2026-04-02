@@ -68,8 +68,8 @@ components.navbar = function () {
 function onLogout() {
   Swal.fire({
     icon: "warning",
-    title: "Logout admin?",
-    text: "Session admin akan dihapus dari browser ini.",
+    title: "Yakin mau logout?",
+    text: "Session akan dihapus dari browser ini.",
     showCancelButton: true,
     confirmButtonText: "Ya, logout",
     cancelButtonText: "Batal",

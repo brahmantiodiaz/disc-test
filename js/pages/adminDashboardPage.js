@@ -107,6 +107,7 @@ function getParticipantId(id) {
   services.participant.deleteById(id);
   dataTabelParticipant = services.participant.getAll();
   renderDataTabel();
+  renderTotalDataTabelParticipant();
   // return window.location.reload();
 }
 
