@@ -54,11 +54,22 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
   `;
       let user = services.user.getByUserName(userData().userName);
+
+      if (!user) {
+        services.alert.warning("User tidak ditemukan. Silakan login ulang.");
+        setTimeout(function () {
+          window.location.href = "user-login.html";
+        }, 900);
+        return;
+      }
+
       document.getElementById("name").value = user.fullName;
       if (user.gender && user.age) {
         setDraft(user);
         startTest();
+        return;
       }
+
       document
         .getElementById("participant-form")
         .addEventListener("submit", function (event) {
@@ -66,21 +77,21 @@ document.addEventListener("DOMContentLoaded", function () {
           let name = document.getElementById("name").value.trim();
           let gender = document.getElementById("gender").value;
           let age = document.getElementById("age").value.trim();
-          user.gender = gender;
-          user.age = age;
-          if (user.gender && user.age) {
-            services.user.update({
-              userName: user.userName,
-              fullName: user.fullName,
-              password: user.password,
-              gender: user.gender,
-              age: user.age,
-            });
-          }
+
           if (!name || !gender || !age) {
             services.alert.toastWarning("Semua field wajib diisi.");
             return;
           }
+
+          user.gender = gender;
+          user.age = age;
+
+          services.user.update({
+            ...user,
+            gender: user.gender,
+            age: user.age,
+          });
+
           setDraft(user);
           startTest();
         });
@@ -96,13 +107,19 @@ function setDraft(user) {
     createdAt: new Date().toISOString(),
     answers: [],
   };
-  localStorage.setItem("disc_current_participant", JSON.stringify(draft));
-  localStorage.setItem("disc_current_question_index", 0);
+  services.storage.set("disc_current_participant", draft);
+  services.storage.set("disc_current_question_index", 0);
 }
 function startTest() {
   let root = document.getElementById("page-content");
   let participant = services.storage.get("disc_current_participant", null);
   let questions = data.questions || [];
+
+  if (!participant) {
+    services.storage.remove("disc_current_question_index");
+    window.location.href = "test.html";
+    return;
+  }
 
   if (!questions.length) {
     root.innerHTML = `
@@ -120,6 +137,12 @@ function startTest() {
 
   function renderPage() {
     participant = services.storage.get("disc_current_participant", null);
+
+    if (!participant) {
+      services.storage.remove("disc_current_question_index");
+      window.location.href = "test.html";
+      return;
+    }
 
     let currentIndex = services.storage.get("disc_current_question_index", 0);
     if (currentIndex < 0) currentIndex = 0;
@@ -313,7 +336,6 @@ function startTest() {
     services.participant.add(finalParticipant);
     services.storage.remove("disc_current_question_index");
     services.storage.remove("disc_current_participant");
-    console.log("harusnya keluar alert");
     services.alert
       .success("Test selesai. Hasil akan ditampilkan sekarang.")
       .then(function () {
