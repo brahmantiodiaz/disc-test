@@ -7,25 +7,19 @@ let auth = {
   fullName: "Super Admin",
 };
 let userData = function () {
-  return services.storage.get("userLogin", {});
-};
-document.addEventListener("DOMContentLoaded", function () {
-  let getUserList = localStorage.getItem("user_list");
-  if (!getUserList) {
-    getUserList = [];
+  if (!services.storage) {
+    return {};
   }
 
-  try {
-    getUserList = JSON.parse(getUserList);
-  } catch (error) {
-    getUserList = [];
+  return services.storage.get("userLogin", {});
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (!services.user) {
+    return;
   }
-  let admin;
-  for (let i = 0; i < getUserList.length; i++) {
-    if (getUserList[i].userName === auth.username) {
-      admin = getUserList[i];
-    }
-  }
+
+  let admin = services.user.getByUserName(auth.username);
 
   if (!admin) {
     services.user.add({
