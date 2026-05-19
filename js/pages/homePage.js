@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   components.navbar();
   components.footer();
+
   let user = services.storage.get("userLogin", {});
   let startPage = "test.html";
-  let adminBtn = document.getElementById("btn-admin");
-  // console.log(user);
-  let findData = services.participant.getByUserName(user.userName);
-  console.log(findData);
+  let findData = user.userName
+    ? services.participant.getByUserName(user.userName)
+    : null;
+
   if (findData) {
     startPage = `result.html?id=${findData.id}`;
   }
+
   let renderButton = "";
   if (user.isAdmin) {
     renderButton = `<a
@@ -85,9 +87,4 @@ document.addEventListener("DOMContentLoaded", function () {
   />
 </section>
 `;
-  if (user.userName && user.isAdmin === false) {
-    adminBtn.classList.add("disabled");
-    adminBtn.style.pointerEvents = "none";
-    adminBtn.style.opacity = "0.5";
-  }
 });
